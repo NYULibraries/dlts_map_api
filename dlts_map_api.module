@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Implements hook_custom_theme().
+ * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_custom_theme/7
+ */
+function dlts_map_api_custom_theme() {
+
+  $arg = arg () ;
+  
+  $path = explode ( '/', drupal_lookup_path('alias', implode ( '/' , $arg ) ) ) ;
+    
+  if ( isset ( $path[0] ) && $path[0] == 'maps' && isset ( $path[1] ) && ! isset ( $path[2] ) ) return 'dlts_map' ;
+
+}
+
+function dlts_map_api_book_edit_redirect( $arg ) {
+
+  if ( is_object ( $arg ) && isset ( $arg->type ) && $arg->type == 'dlts_map' ) {
+    if ( $identifier = dlts_utilities_book_get_identifier( $arg ) ) $path = drupal_lookup_path( 'source', 'maps/' . $identifier );
+  }
+
+  else {
+    $path = drupal_lookup_path('source', 'maps/' . $arg);
+  }
+
+  if ( !$path ) drupal_not_found();
+
+  else drupal_goto($path . '/edit');
+
+}
+
+function dlts_map_api_book_page_edit_redirect($arg1, $arg2, $arg3) {
+
+  $path = drupal_lookup_path('source', $arg1 . '/' . $arg2 . '/' . $arg3);
+
+  drupal_goto($path . '/edit');
+
+}

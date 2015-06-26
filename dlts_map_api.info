@@ -1,0 +1,9 @@
+name = DLTS Map API
+description = DLTS Map API implementation
+package = DLTS
+
+core = 7.x
+version = 7.x-1.6
+
+dependencies[] = dlts_utilities
+dependencies[] = entity
